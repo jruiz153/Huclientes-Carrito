@@ -1,0 +1,30 @@
+.mat-column-name {
+    flex: 0 0 90%;
+}
+
+.mat-input-element {
+    caret-color: gray;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: gray !important;
+}
+
+ ::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #ccc !important;
+}
+
+ ::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #D4001B !important;
+}
+
+.w-75 {
+    width: 50px;
+}
+
+.w-25 {
+    width: 25%;
+}

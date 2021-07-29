@@ -1,0 +1,46 @@
+<mat-nav-list>
+    <div mat-subheader [matMenuTriggerFor]="menu">
+        <mat-icon mat-list-icon>flight</mat-icon>
+        <span>Aeropuerto</span>
+    </div>
+    <mat-list-item>
+        <mat-icon mat-list-icon>drag_indicator</mat-icon>
+        <div mat-line>
+            <a [routerLink]="'/leer-hu'" [matMenuTriggerFor]="menu">Leer HU envia </a>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item>
+        <mat-icon mat-list-icon>flight</mat-icon>
+        <div mat-line>
+            <a [routerLink]="'/panel'">Procesar aeropuerto</a>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item>
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div mat-line>
+            <a [routerLink]="'/panel'">Panel despacho</a>
+        </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <div mat-subheader>envía</div>
+    <mat-list-item>
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div mat-line>
+            <a [routerLink]="'/login'">Salir </a>
+        </div>
+    </mat-list-item>
+</mat-nav-list>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>reorder</mat-icon>
+      <span><a [routerLink]="'/leer-hu'">Leer HU </a></span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>voicemail</mat-icon>
+      <span><a [routerLink]="'/login'">Login </a></span>
+    </button>
+</mat-menu>

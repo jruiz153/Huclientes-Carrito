@@ -1,0 +1,10 @@
+<mat-toolbar style="border-bottom: 1px solid #ddd;">
+    <button mat-icon-button>
+    <mat-icon>apps</mat-icon>
+    </button>
+    <div *ngIf="items.length > 0">
+        <button mat-raised-button (click)="irCarrito()" color="primary" [matBadge]="items.length" matBadgePosition="after" matBadgeColor="accent">
+            Carrito
+        </button>
+    </div>
+</mat-toolbar>

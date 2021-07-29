@@ -1,0 +1,145 @@
+<div style="padding: 3px"></div>
+<form focusInvalidInput [formGroup]="forma" (ngSubmit)="submit()">
+
+    <div class="form-horizontal">
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <mat-form-field>
+                        <mat-label>Fecha 1:</mat-label>
+                        <input matInput [matDatepicker]="picker" id="txtFechaIni" name="txtFechaIni" formControlName="txtFechaIni">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-md-3 col-lg-3">
+                    <mat-form-field>
+                        <mat-label>Fecha 2:</mat-label>
+                        <input matInput [matDatepicker]="picker1" id="txtFechaFin" name="txtFechaFin" formControlName="txtFechaFin">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-md-2 col-lg-2">
+                    <button class="btn btn-primary" (click)="consultarHUs()">Consultar</button>
+                </div>
+                <div class="col-sm-6 col-md-2 col-lg-2" style="padding-left: 1px;">
+                    <button class="btn btn-primary" (click)="nuevo()">Nuevo</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" *ngIf="items.length > 0">
+        <div class="col-sm-12">
+            <table class="tabla tabla-bordered">
+                <tr style="font-weight: bold;" align="center">
+                    <td>#</td>
+                    <td>HU</td>
+                    <td>Cod_Novedad</td>
+                    <td>Aclaracion</td>
+                </tr>
+                <tr *ngFor="let item of items; let i = index" align="center">
+                    <td>{{ i + 1 }}</td>
+                    <td><b>{{ item.hu }}</b></td>
+                    <td>{{ item.guias }}</td>
+                    <td>{{ item.cod_novedad }}</td>
+                    <td>{{ item.aclaracion }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <app-loading [mensaje]="mensaje" *ngIf="cargandoHU"></app-loading>
+    <div style="padding: 3px"></div>
+    <app-messages [mensaje]="mensaje_hus" *ngIf="mensaje_hus"></app-messages>
+    <div style="padding: 3px"></div>
+    <div class="form-horizontal" style="width:100%; height:200px; font-size:11px;" *ngIf="isHU">
+        <div class="panel panel-default">
+            <div class="panel-body" ng-show="isHU" style="width:100%; height:200px; font-size:11px;overflow: scroll;">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <table id="tblCola" name="tblCola" class="tabla tabla-hover tabla-bordered !important">
+                            <tr style="font-size:11px;position: sticky; font-weight:bold; background-color:#f7f7f7;text-align: center;">
+                                <th>Numero Guía</th>
+                                <th>Asignada en MELI</th>
+                                <th>Asignada en RV</th>
+                                <th>Leida en descargue</th>
+                                <th>Fecha_Recol_HU</th>
+                                <th>Fecha_Despa_HU</th>
+                                <th>Fecha_Noved_HU</th>
+                                <th>Fecha_Dispe_HU</th>
+                            </tr>
+                            <tr align="center" style="font-size:12px" *ngFor="let h of hus">
+                                <td><a (click)="consultarRVsHU(h)" style="cursor:pointer">{{ h.Id }}</a></td>
+                                <td>{{ h.Estado }}</td>
+                                <td>{{ h.Fec_HU }}</td>
+                                <td><b>{{ h.GuiasReciMeli }}</b></td>
+                                <td>{{ h.Fecha_Recol_HU }}</td>
+                                <td>{{ h.Fecha_Despa_HU }}</td>
+                                <td>{{ h.Fecha_Noved_HU }}</td>
+                                <td>{{ h.Fecha_Dispe_HU }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 3px"></div>
+    <!-- <div class="mat-elevation-z3" *ngIf="isHU" style="width:100%; height:200px; font-size:11px;overflow: scroll;">
+        <table mat-table class="full-width" [dataSource]="dataSource" matSort aria-label="Elements">
+
+            <ng-container matColumnDef="Id">
+                <th class="w-10 table-row" mat-header-cell *matHeaderCellDef>Numero HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Id}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Estado">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Estado}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fec_HU">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Fec_HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Fec_HU}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="GuiasReciMeli">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>GuiasReciMeli</th>
+                <td mat-cell *matCellDef="let hu">{{hu.GuiasReciMeli}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha_Recol_HU">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Fecha_Recol_HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Fecha_Recol_HU}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha_Despa_HU">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Fecha_Despa_HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Fecha_Despa_HU}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha_Noved_HU">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Fecha_Noved_HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Fecha_Noved_HU}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="Fecha_Dispe_HU">
+                <th class="w-10" mat-header-cell *matHeaderCellDef>Fecha_Dispe_HU</th>
+                <td mat-cell *matCellDef="let hu">{{hu.Fecha_Dispe_HU}}</td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator #paginator [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20]">
+        </mat-paginator>
+    </div> -->
+</form>
